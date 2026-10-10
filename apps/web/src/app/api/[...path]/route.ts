@@ -20,7 +20,7 @@ const REQUEST_HEADERS = [
 ];
 
 const RESPONSE_HEADERS = [
-  'cache-control', 'content-disposition', 'content-length', 'content-security-policy',
+  'cache-control', 'content-disposition', 'content-security-policy',
   'content-type', 'pragma', 'retry-after',
 ];
 
