@@ -44,7 +44,7 @@ export async function generateNbaExcelWorkbook(
   summarySheet.addRow(['NBA TIER-1 SELF ASSESSMENT REPORT (SAR)']);
   summarySheet.addRow(['CRITERION 5: FACULTY INFORMATION AND CONTRIBUTIONS (200 MARKS)']);
   summarySheet.addRow([`Department: ${report.department.name} (${report.department.code})`]);
-  summarySheet.addRow([`Accreditation Cycle: ${report.cycle.name} (${report.cycle.startYear}–${report.cycle.endYear})`]);
+  summarySheet.addRow([`Accreditation Cycle: ${report.cycle.name} (${report.cycle.startYear} - ${report.cycle.endYear})`]);
   summarySheet.addRow([]);
 
   // Title formatting

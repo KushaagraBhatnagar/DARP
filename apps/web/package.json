@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@darp/shared": "*",
+    "lucide-react": "^1.55.0",
     "next": "^15.5.27",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

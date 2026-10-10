@@ -36,7 +36,7 @@ export const GET = withRoute(
     if (sp.get('format') === 'xlsx' || sp.get('download') === '1') {
       const wb = await generateNbaExcelWorkbook(report);
       const buffer = await wb.xlsx.writeBuffer();
-      const safeCycle = report.cycle.name.replace(/[^a-zA-Z0-9_-]/g, '_');
+      const safeCycle = report.cycle.name.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
       const filename = `NBA_Tier1_SAR_Criterion5_${report.department.code}_${safeCycle}.xlsx`;
 
       return file(new Uint8Array(buffer), {

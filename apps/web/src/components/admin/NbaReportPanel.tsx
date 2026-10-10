@@ -2,6 +2,19 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Button, Card, CardHeader, Notice, StatePill, Table, Th, Td } from '@/components/ui';
+import {
+  FileSpreadsheet,
+  Award,
+  Users,
+  GraduationCap,
+  TrendingUp,
+  Building2,
+  BookOpen,
+  Briefcase,
+  Layers,
+  AlertCircle,
+  Loader2,
+} from 'lucide-react';
 import type { DepartmentRow } from './types';
 
 interface NbaSubCriteria {
@@ -196,66 +209,102 @@ export function NbaReportPanel() {
               variant="primary"
               onClick={handleDownloadExcel}
               disabled={downloading || !report}
+              className="inline-flex items-center gap-2"
             >
-              {downloading ? 'Generating Excel...' : '📊 Download NBA SAR Excel (.xlsx)'}
+              {downloading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
+                  <span>Generating Excel...</span>
+                </>
+              ) : (
+                <>
+                  <FileSpreadsheet className="h-4 w-4 text-white" />
+                  <span>Download NBA SAR Excel (.xlsx)</span>
+                </>
+              )}
             </Button>
           </div>
         </div>
       </Card>
 
-      {error ? <Notice tone="danger">{error}</Notice> : null}
+      {error ? (
+        <Notice tone="danger">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        </Notice>
+      ) : null}
 
       {loading ? (
         <div className="flex min-h-[240px] items-center justify-center rounded-lg border border-line-faint bg-surface p-8">
           <div className="text-center">
-            <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-brand-600 border-t-transparent" />
-            <p className="mt-2 text-xs text-ink-muted">Computing NBA Tier-1 SAR Criterion 5 metrics...</p>
+            <Loader2 className="mx-auto h-7 w-7 animate-spin text-primary" />
+            <p className="mt-3 text-xs font-medium text-ink-muted">Computing NBA Tier-1 SAR Criterion 5 metrics...</p>
           </div>
         </div>
       ) : report ? (
         <>
           {/* Executive Scorecard & KPIs */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            <div className="rounded-lg border border-brand-200 bg-brand-50/50 p-4 shadow-2xs">
-              <div className="text-2xs font-bold uppercase tracking-wider text-brand-700">Criterion 5 Score</div>
-              <div className="mt-1 text-2xl font-black text-brand-900">
+            <div className="rounded-lg border border-primary/20 bg-primary-soft/40 p-4 shadow-2xs">
+              <div className="flex items-center justify-between">
+                <span className="text-2xs font-bold uppercase tracking-wider text-primary">Criterion 5</span>
+                <Award className="h-4 w-4 text-primary" />
+              </div>
+              <div className="mt-1.5 text-2xl font-black text-ink">
                 {report.summary.totalMarks} <span className="text-xs font-normal text-ink-muted">/ 200</span>
               </div>
-              <div className="mt-1 text-2xs text-brand-700">
+              <div className="mt-1 text-2xs font-semibold text-primary">
                 {Math.round((report.summary.totalMarks / 200) * 100)}% Achievement
               </div>
             </div>
 
             <div className="rounded-lg border border-line bg-surface p-4 shadow-2xs">
-              <div className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Student-Faculty (SFR)</div>
-              <div className="mt-1 text-2xl font-black text-ink">1:{report.summary.sfr}</div>
-              <div className="mt-1 text-2xs text-success-600">AICTE Target &le; 1:15</div>
+              <div className="flex items-center justify-between">
+                <span className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Student-Faculty</span>
+                <Users className="h-4 w-4 text-ink-faint" />
+              </div>
+              <div className="mt-1.5 text-2xl font-black text-ink">1:{report.summary.sfr}</div>
+              <div className="mt-1 text-2xs font-medium text-success-700">AICTE Target &le; 1:15</div>
             </div>
 
             <div className="rounded-lg border border-line bg-surface p-4 shadow-2xs">
-              <div className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Ph.D. Faculty (FQ)</div>
-              <div className="mt-1 text-2xl font-black text-ink">
+              <div className="flex items-center justify-between">
+                <span className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Ph.D. Faculty</span>
+                <GraduationCap className="h-4 w-4 text-ink-faint" />
+              </div>
+              <div className="mt-1.5 text-2xl font-black text-ink">
                 {report.summary.phdCount} <span className="text-xs font-normal text-ink-muted">/ {report.summary.facultyCount}</span>
               </div>
-              <div className="mt-1 text-2xs text-info-600">FQ Score: {report.summary.fqIndex} / 20</div>
+              <div className="mt-1 text-2xs font-medium text-primary">FQ Score: {report.summary.fqIndex} / 20</div>
             </div>
 
             <div className="rounded-lg border border-line bg-surface p-4 shadow-2xs">
-              <div className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Faculty Retention</div>
-              <div className="mt-1 text-2xl font-black text-ink">{report.summary.retentionRate}%</div>
-              <div className="mt-1 text-2xs text-success-600">&ge; 90% (Full 10 Marks)</div>
+              <div className="flex items-center justify-between">
+                <span className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Faculty Retention</span>
+                <TrendingUp className="h-4 w-4 text-ink-faint" />
+              </div>
+              <div className="mt-1.5 text-2xl font-black text-ink">{report.summary.retentionRate}%</div>
+              <div className="mt-1 text-2xs font-medium text-success-700">&ge; 90% (Full 10 Marks)</div>
             </div>
 
             <div className="rounded-lg border border-line bg-surface p-4 shadow-2xs">
-              <div className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Sponsored Grants</div>
-              <div className="mt-1 text-2xl font-black text-ink">₹ {report.summary.totalGrantsLakhs.toFixed(1)}L</div>
-              <div className="mt-1 text-2xs text-brand-600">30 / 30 Marks</div>
+              <div className="flex items-center justify-between">
+                <span className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Grants</span>
+                <Briefcase className="h-4 w-4 text-ink-faint" />
+              </div>
+              <div className="mt-1.5 text-2xl font-black text-ink">₹ {report.summary.totalGrantsLakhs.toFixed(1)}L</div>
+              <div className="mt-1 text-2xs font-medium text-primary">30 / 30 Marks</div>
             </div>
 
             <div className="rounded-lg border border-line bg-surface p-4 shadow-2xs">
-              <div className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Consultancy Revenue</div>
-              <div className="mt-1 text-2xl font-black text-ink">₹ {report.summary.totalConsultancyLakhs.toFixed(1)}L</div>
-              <div className="mt-1 text-2xs text-brand-600">20 / 20 Marks</div>
+              <div className="flex items-center justify-between">
+                <span className="text-2xs font-bold uppercase tracking-wider text-ink-muted">Consultancy</span>
+                <Building2 className="h-4 w-4 text-ink-faint" />
+              </div>
+              <div className="mt-1.5 text-2xl font-black text-ink">₹ {report.summary.totalConsultancyLakhs.toFixed(1)}L</div>
+              <div className="mt-1 text-2xs font-medium text-primary">20 / 20 Marks</div>
             </div>
           </div>
 
@@ -279,11 +328,11 @@ export function NbaReportPanel() {
                 <tbody>
                   {report.subCriteria.map((sc) => (
                     <tr key={sc.criterion} className="hover:bg-surface-inset/40">
-                      <Td className="font-mono text-xs font-bold text-brand-700">{sc.criterion}</Td>
+                      <Td className="font-mono text-xs font-bold text-primary">{sc.criterion}</Td>
                       <Td className="font-semibold text-ink">{sc.title}</Td>
                       <Td className="text-center font-mono text-xs text-ink-muted">{sc.maxMarks}</Td>
                       <Td className="text-center font-mono text-sm font-bold text-ink">
-                        <span className={sc.awardedMarks === sc.maxMarks ? 'text-success-700' : 'text-brand-800'}>
+                        <span className={sc.awardedMarks === sc.maxMarks ? 'text-success-700' : 'text-primary'}>
                           {sc.awardedMarks}
                         </span>
                       </Td>
@@ -295,7 +344,7 @@ export function NbaReportPanel() {
                       TOTAL CRITERION 5 SCORE
                     </td>
                     <Td className="text-center font-mono text-sm">200</Td>
-                    <Td className="text-center font-mono text-sm font-black text-brand-900">
+                    <Td className="text-center font-mono text-sm font-black text-primary">
                       {report.summary.totalMarks}
                     </Td>
                     <Td className="text-xs text-ink-muted">
@@ -312,25 +361,29 @@ export function NbaReportPanel() {
             <div className="border-b border-line px-4 pt-3">
               <div className="flex flex-wrap gap-2">
                 {[
-                  { key: 'faculty', label: `Table 5.1: Faculty Details (${report.tables.facultyList.length})` },
-                  { key: 'grants', label: `Table 5.4: Grants (${report.tables.sponsoredProjects.length})` },
-                  { key: 'consultancy', label: `Table 5.5: Consultancy (${report.tables.consultancyProjects.length})` },
-                  { key: 'pubs', label: `Table 5.7: Publications & IPR (${report.tables.publications.length})` },
-                  { key: 'fdps', label: `Table 5.8: FDPs Attended (${report.tables.fdps.length})` },
-                ].map((t) => (
-                  <button
-                    key={t.key}
-                    type="button"
-                    onClick={() => setActiveTableTab(t.key as typeof activeTableTab)}
-                    className={`border-b-2 px-3 py-2 text-xs font-semibold transition-colors ${
-                      activeTableTab === t.key
-                        ? 'border-brand-600 text-brand-700'
-                        : 'border-transparent text-ink-muted hover:text-ink'
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
+                  { key: 'faculty', label: `Table 5.1: Faculty Details (${report.tables.facultyList.length})`, icon: Users },
+                  { key: 'grants', label: `Table 5.4: Grants (${report.tables.sponsoredProjects.length})`, icon: Briefcase },
+                  { key: 'consultancy', label: `Table 5.5: Consultancy (${report.tables.consultancyProjects.length})`, icon: Building2 },
+                  { key: 'pubs', label: `Table 5.7: Publications & IPR (${report.tables.publications.length})`, icon: BookOpen },
+                  { key: 'fdps', label: `Table 5.8: FDPs Attended (${report.tables.fdps.length})`, icon: Layers },
+                ].map((t) => {
+                  const Icon = t.icon;
+                  return (
+                    <button
+                      key={t.key}
+                      type="button"
+                      onClick={() => setActiveTableTab(t.key as typeof activeTableTab)}
+                      className={`inline-flex items-center gap-1.5 border-b-2 px-3 py-2 text-xs font-semibold transition-colors ${
+                        activeTableTab === t.key
+                          ? 'border-primary text-primary'
+                          : 'border-transparent text-ink-muted hover:text-ink'
+                      }`}
+                    >
+                      <Icon className="h-3.5 w-3.5" />
+                      <span>{t.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
