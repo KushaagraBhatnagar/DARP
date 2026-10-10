@@ -25,6 +25,7 @@ import * as adminCycles from './admin/cycles';
 import * as adminMasterLists from './admin/master-lists';
 import * as adminJournalLists from './admin/journal-lists';
 import * as adminReveal from './admin/reveal';
+import * as adminNba from './admin/nba';
 
 /**
  * Every endpoint the API serves, in one table. Each handler (bar /health) is built with
@@ -76,3 +77,4 @@ api.patch('/admin/master-lists', adminMasterLists.PATCH);
 api.get('/admin/journal-lists', adminJournalLists.GET);
 api.post('/admin/journal-lists', adminJournalLists.POST);
 api.post('/admin/reveal/:recordId/:fieldKey', adminReveal.POST);
+api.get('/admin/nba', adminNba.GET);

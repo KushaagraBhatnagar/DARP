@@ -109,7 +109,7 @@ export interface AuditPayload {
   };
 }
 
-export type AdminTab = 'accounts' | 'lists' | 'journals' | 'cycle' | 'audit' | 'exports';
+export type AdminTab = 'accounts' | 'lists' | 'journals' | 'cycle' | 'audit' | 'exports' | 'nba';
 
 export const ADMIN_TABS: ReadonlyArray<{ key: AdminTab; label: string }> = [
   { key: 'accounts', label: 'Accounts' },
@@ -118,6 +118,7 @@ export const ADMIN_TABS: ReadonlyArray<{ key: AdminTab; label: string }> = [
   { key: 'cycle', label: 'Cycle' },
   { key: 'audit', label: 'Audit log' },
   { key: 'exports', label: 'Exports' },
+  { key: 'nba', label: 'NBA SAR (Tier-1)' },
 ];
 
 export function isAdminTab(value: string | undefined): value is AdminTab {

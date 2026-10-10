@@ -8,6 +8,7 @@ import { JournalListsPanel } from './JournalListsPanel';
 import { CyclePanel } from './CyclePanel';
 import { AuditPanel } from './AuditPanel';
 import { ExportsPanel } from './ExportsPanel';
+import { NbaReportPanel } from './NbaReportPanel';
 import { ADMIN_TABS, type AdminTab } from './types';
 
 /**
@@ -60,6 +61,7 @@ export function AdminConsole({
         {tab === 'cycle' ? <CyclePanel /> : null}
         {tab === 'audit' ? <AuditPanel /> : null}
         {tab === 'exports' ? <ExportsPanel /> : null}
+        {tab === 'nba' ? <NbaReportPanel /> : null}
       </div>
     </div>
   );
