@@ -9,10 +9,11 @@ import { IconUser, IconLogout, IconChevronDown, IconChevronRight } from './Icon'
 export interface Crumb { label: string; href?: string }
 
 export function Topbar({
-  name, roleLabel, departmentName, crumbs, cycleName,
+  name, roleLabel, isAdmin, departmentName, crumbs, cycleName,
 }: {
   name: string;
   roleLabel: string;
+  isAdmin?: boolean;
   departmentName: string | null;
   crumbs: Crumb[];
   cycleName: string;
@@ -89,6 +90,28 @@ export function Topbar({
               role="menu"
               className="absolute right-0 z-30 mt-1 w-56 rounded-sm border border-line bg-surface py-1 shadow-md"
             >
+              {isAdmin ? (
+                <>
+                  <Link
+                    href="/admin?tab=nba"
+                    role="menuitem"
+                    className="flex items-center justify-between px-3 py-2 text-sm font-semibold text-primary hover:bg-surface-2"
+                  >
+                    <span>NBA SAR (Criterion 5)</span>
+                    <span className="rounded-xs bg-primary/10 px-1 py-0.5 text-3xs font-bold uppercase text-primary">
+                      Tier-1
+                    </span>
+                  </Link>
+                  <Link
+                    href="/admin"
+                    role="menuitem"
+                    className="block px-3 py-2 text-sm text-ink hover:bg-surface-2"
+                  >
+                    Admin Console
+                  </Link>
+                  <div className="my-1 border-t border-line" />
+                </>
+              ) : null}
               <Link
                 href="/profile"
                 role="menuitem"

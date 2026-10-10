@@ -14,8 +14,8 @@ export type { SidebarGroup, SidebarItem } from '@darp/shared/contracts';
  * It does no authorization of its own — the page passes only permitted groups.
  */
 export function Sidebar({
-  groups, roleLabel,
-}: { groups: SidebarGroup[]; roleLabel: string }) {
+  groups, roleLabel, isAdmin,
+}: { groups: SidebarGroup[]; roleLabel: string; isAdmin?: boolean }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState('');
@@ -151,6 +151,46 @@ export function Sidebar({
 
           {shown.length === 0 ? (
             <p className="px-2.5 py-4 text-xs text-ink-muted">No module matches “{filter}”.</p>
+          ) : null}
+
+          {isAdmin ? (
+            <div className="mt-4 border-t border-line/60 pt-3">
+              <h2 className="px-2.5 pb-1 text-2xs font-bold uppercase tracking-wider text-primary">
+                IQAC Governance
+              </h2>
+              <ul className="space-y-px">
+                <li>
+                  <Link
+                    href="/admin?tab=nba"
+                    aria-current={pathname === '/admin' ? 'page' : undefined}
+                    className={cx(
+                      'flex items-center justify-between rounded-sm px-2.5 py-1.5 text-sm font-semibold',
+                      pathname === '/admin'
+                        ? 'bg-primary-soft text-primary'
+                        : 'text-ink-muted hover:bg-surface-2 hover:text-ink',
+                    )}
+                  >
+                    <span>NBA SAR (Criterion 5)</span>
+                    <span className="rounded-xs bg-primary/10 px-1 py-0.5 text-3xs font-bold uppercase text-primary">
+                      Tier-1
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/admin"
+                    className={cx(
+                      'block rounded-sm px-2.5 py-1.5 text-sm',
+                      pathname === '/admin' && !pathname.includes('tab=nba')
+                        ? 'text-primary'
+                        : 'text-ink-muted hover:bg-surface-2 hover:text-ink',
+                    )}
+                  >
+                    Admin Console
+                  </Link>
+                </li>
+              </ul>
+            </div>
           ) : null}
         </nav>
 

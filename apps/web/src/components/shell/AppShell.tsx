@@ -24,11 +24,12 @@ export function AppShell({
     <div className="min-h-dvh bg-canvas">
       <a href="#main" className="skip-link">Skip to main content</a>
       <div className="flex min-h-dvh">
-        <Sidebar groups={groups} roleLabel={ROLE_LABEL[user.role]} />
+        <Sidebar groups={groups} roleLabel={ROLE_LABEL[user.role]} isAdmin={user.role === 'admin'} />
         <div className="flex min-w-0 flex-1 flex-col">
           <Topbar
             name={user.name}
             roleLabel={ROLE_LABEL[user.role]}
+            isAdmin={user.role === 'admin'}
             departmentName={user.departmentName}
             crumbs={crumbs}
             cycleName={cycleName}
